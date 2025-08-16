@@ -1,5 +1,5 @@
 import Express from "express";
-import { conexionDB } from "./db.js";
+import { conexionDB } from "./data/db";
 
 const app = Express();
 //Obtiene el puerto desde la variable de entorno
