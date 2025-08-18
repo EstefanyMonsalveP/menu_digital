@@ -3,10 +3,13 @@ import { conexionDB } from "./data/db";
 import dishRouter from "./routes/dishRouter";
 import userRouter from "./routes/userRouter";
 import authRouter from "./routes/authRouter";
+import cookieParser from "cookie-parser";
 
 const app = Express();
 
 app.use(Express.json());
+app.use(cookieParser());
+
 
 //Obtiene el puerto desde la variable de entorno
 const PORT = process.env.PORT;
