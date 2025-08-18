@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 export const sendRecoveryEmail = async (to: string, resetLink: string) => {
   try {
     await transporter.sendMail({
-      from: `"Mi App" <${process.env.EMAIL_USER}>`,  
+      from: `"Mi App Menu Digital" <${process.env.EMAIL_USER}>`,  
       to,                                            
       subject: 'Recuperación de contraseña',
       html: `
