@@ -1,5 +1,11 @@
 import { authenticateUser } from "../services/authService";
 import { Request, Response } from "express";
+import { resetPasswordSchema } from "../schema/resetPassword.schema";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { User } from "../models/user";
+
+const JWT_SECRET = process.env.JWT_SECRET!;
 
 //Función para manejar la validacion de las credenciales
 export const login = async (req: Request, res:Response) => {
@@ -39,4 +45,37 @@ export const logout = (req: Request, res: Response) => {
     });
 
     return res.status(200).json({ message: "Sesión cerrada correctamente"})
+}
+
+export const resetPassword = async (req: Request, res: Response) => {
+    // Validar datos con Zod
+  const validation = resetPasswordSchema.safeParse(req.body);
+
+  if (!validation.success) {
+    // Enviar errores de validación
+    return res.status(400).json({ errors: validation.error.format() });
+  }
+
+  const { password, confirmPassword, token } = req.body;
+
+  try {
+    // Verificar el token JWT
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+
+    // Buscar usuario por id
+    const user = await User.findById(decoded.id);
+    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+    // Hashear la nueva contraseña
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Actualizar la contraseña del usuario
+    user.password = hashedPassword;
+    await user.save();
+
+    return res.status(200).json({ message: 'Contraseña actualizada correctamente' });
+  } catch (error) {
+    console.error("Error al actualizar contraseña:", error);
+    return res.status(400).json({ message: 'Token inválido o expirado' });
+  }
 }
