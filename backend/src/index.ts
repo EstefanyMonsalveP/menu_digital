@@ -1,6 +1,7 @@
 import Express from "express";
 import { conexionDB } from "./data/db";
 import dishRouter from "./routes/dishRouter";
+import userRouter from "./routes/userRouter";
 
 const app = Express();
 
@@ -16,6 +17,7 @@ conexionDB(); //Se invoca la función para conectar la base de datos.
 
 //Rutas relacionadas con los platos
 app.use("/api/dishes", dishRouter)
+app.use("/api/users", userRouter)
 console.log("Leyendo la ruta dishes")
 
 //Inicializa el servidor en el puerto definido
