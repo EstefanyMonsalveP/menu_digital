@@ -9,10 +9,10 @@ const JWT_SECRET = process.env.JWT_SECRET!;
 
 //Función para manejar la validacion de las credenciales
 export const login = async (req: Request, res:Response) => {
-    const {username , password} = req.body;
+    const {email , password} = req.body;
     try {
         //Invoca la función para validar el usuario y contraseña
-         const {user,token} = await authenticateUser(username ,password);
+         const {user,token} = await authenticateUser(email ,password);
 
         // Coloca el token como cookie
         res.cookie("token", token, {
@@ -27,10 +27,10 @@ export const login = async (req: Request, res:Response) => {
         return res.status(200).json({message: 'Inicio de sesión exitoso',
             user: {
             id: user._id,
-            username: user.username
+            username: user.name
       }});
     } catch (error) {
-        console.log("Error al iniciar sesion")
+        console.log("Error al iniciar sesion",error)
         //Envia mensaje de error y codigo
         return res.status(500).json({message: "Error al iniciar sesion"});
     }

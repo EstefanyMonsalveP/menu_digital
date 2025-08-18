@@ -13,7 +13,7 @@ authRouter.post("/logout", logout);
 //Ruta para enviar correo de recuperracion de contraseña al email.
 authRouter.post('/recover-password', recoveryPassoword);
 
-//Ruta para enviar correo de recuperracion de contraseña al email.
+//Ruta para actualizar contraseña.
 authRouter.post('/reset-password', resetPassword);
 
 export default authRouter;

@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 //Define la interfaz para un usuario
 export interface IUser extends Document {
     name: string;
-    username: string;
     email: string;
     password: string;
     comparePassword(password: string): Promise <boolean>;
@@ -13,7 +12,6 @@ export interface IUser extends Document {
 //Esquema para la colección de usuarios
 const userSchema : Schema<IUser>  = new Schema({
     name: { type: String, required: true },
-    username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
 })
