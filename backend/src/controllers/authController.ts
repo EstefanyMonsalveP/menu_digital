@@ -31,3 +31,13 @@ export const login = async (req: Request, res:Response) => {
     }
 }
 
+//Funcion para eliminar el token de la cookie.
+export const logout = (req: Request, res: Response) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+    });
+
+    return res.status(200).json({ message: "Sesión cerrada correctamente"})
+}
