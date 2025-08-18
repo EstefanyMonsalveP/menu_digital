@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createDish, getAllDishes,updateDish, removeDish} from "../Controller/dishController";
+import { createDish, getAllDishes,updateDish, removeDish} from "../controllers/dishController";
 
 const dishRouter = Router();
 

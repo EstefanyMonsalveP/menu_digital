@@ -19,11 +19,11 @@ export const createDish = async (req: Request, res: Response) => {
         await newDish.save();
 
         //Envia la respuesta con el estado y los nuevos datos del plato
-        res.status(201).json({message: "Preparacion Creada", data: newDish})
+        return res.status(201).json({message: "Preparacion Creada", data: newDish})
     }catch(error){
-        //Envia una respuesta del error con el mensaje
-        res.status(500).json({ error: "Error al crear el plato" });
         console.log("error al crear el plato", error)
+        //Envia una respuesta del error con el mensaje
+        return res.status(500).json({ error: "Error al crear el plato" });
     }
 }
 
@@ -57,10 +57,10 @@ export const updateDish = async (req: Request, res: Response) => {
         );
 
         //Envia la respuesta con el estado y los nuevos datos del plato
-        res.status(200).json({ message: "Plato actualizado", data: updateDish });
+        return res.status(200).json({ message: "Plato actualizado", data: updateDish });
     }catch(error){
         //Envia una respuesta del error con el mensaje
-        res.status(500).json({ error: "Error al actualizar los datos" });
+        return res.status(500).json({ error: "Error al actualizar los datos" });
     }
 }
 
@@ -74,9 +74,9 @@ export const removeDish = async (req: Request, res: Response) => {
     await Dish.findByIdAndDelete(id);
 
     //Envia la respuesta con el estado y los nuevos datos del plato
-    res.status(200).json({ message: "Plato eliminado de la carta"});
+    return res.status(200).json({ message: "Plato eliminado de la carta"});
     }catch(error){
         //Envia una respuesta del error con el mensaje
-        res.status(500).json({ error: "Error al eliminar el plato" });
+    return res.status(500).json({ error: "Error al eliminar el plato" });
     }
 }
