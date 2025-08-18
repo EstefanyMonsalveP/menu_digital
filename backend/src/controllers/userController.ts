@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User} from "../models/user";
-import { checkUserExists } from "../services/userService";
+import { checkUserExists, authenticateUser } from "../services/userService";
 import { userRegisterSchema } from "../schema/user.schema";
 import { ZodError } from "zod";
 
@@ -32,6 +32,19 @@ export const createUser = async (req: Request, res: Response) => {
     }
         //Envia el error con el mensaje si proviene del servidor
         return res.status(500).json({message: "Error al crear al usuario"})
+    }
+}
+
+export const login = async (req: Request, res:Response) => {
+    const {username , password} = req.body;
+
+    try {
+         await authenticateUser(username ,password);
+
+        res.status(200).json({message: "Iniciando sesion"});
+    } catch (error) {
+        console.log("Error al iniciar sesion")
+        res.status(500).json({message: "Error al iniciar sesion"});
     }
 }
 

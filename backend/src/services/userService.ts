@@ -23,9 +23,11 @@ export const authenticateUser = async (username: string , password:string ) => {
     //Si el usuario no existe envia el error
     if(!user) throw new Error("El usuario no existe"); 
 
+    //Compara las contraseñas hasheadas.
     const isValidPassword = await bcrypt.compare(password, user.password);
 
-    if(!isValidPassword) throw new Error("Contraseña incorrecta");
+    //Envia un error si las contraseñas no coinciden.
+    if(!isValidPassword) throw new Error("El usuario o la contraseña es incorrecta");
 
     return user;
     
