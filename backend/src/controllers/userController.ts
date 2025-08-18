@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
 import { User} from "../models/user";
+import { checkUserExists } from "../../services/userService";
 
 //Función para crear un nuevo usuario
 export const createUser = async (req: Request, res: Response) => {
     const {name,username,email,password} = req.body;
     try {
-        //Extrae las variables del cuerpo de la interfaz
+
+        //Invoca la función para validar los datos del usuario
+        await checkUserExists(username, email);
+
+        //Despues de la validación, continua con la creación del usuario
         const newUser = new User({
             name,
             username,
