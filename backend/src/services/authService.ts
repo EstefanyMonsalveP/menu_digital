@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { User } from "../models/user";
+import { generateToken } from "../utils/tokenUtils";
 
 //Validar si el usuario existe en la base de datos
 export const authenticateUser = async (username: string , password:string ) => {
@@ -14,6 +15,8 @@ export const authenticateUser = async (username: string , password:string ) => {
     //Envia un error si las contraseñas no coinciden.
     if(!isValidPassword) throw new Error("El usuario o la contraseña es incorrecta");
 
-    return user;
+    const token = await generateToken({id: user.id, username: user.username,})
+
+    return {user, token};
     
 }
