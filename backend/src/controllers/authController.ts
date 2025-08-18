@@ -19,7 +19,6 @@ export const login = async (req: Request, res:Response) => {
          //Envia la respuesta de la autenticacion exitosa con el token 
          //y datos basicos del usuario
         return res.status(200).json({message: 'Inicio de sesión exitoso',
-            token,
             user: {
             id: user._id,
             username: user.username
