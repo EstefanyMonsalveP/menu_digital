@@ -3,17 +3,14 @@ import { Request, Response, NextFunction } from "express";
 
 //Middleware para proteger las rutas de navegación
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) =>{
-    //Obtiene el header de la solicitud.
-    const authHeader = req.headers.authorization;
+    //Obtiene el token desde la cookie
+    const token = req.cookies?.token;
 
     //Si no existe el header , se bloquea el acceso
-    if(!authHeader?.startsWith('Bearer ')){
-        return res.status(401).json({message: 'Token no proporcionado'})
+    if(!token){
+        return res.status(401).json({message: 'Token no autorizado'})
     }
-
-    //Extrae solamente el token
-    const token = authHeader.split(' ')[1]!;
-
+    
     try {
 
         //Invoca la funcion para verificar el token.
