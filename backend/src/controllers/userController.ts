@@ -1,21 +1,19 @@
 import { Request, Response } from "express";
 import { User} from "../models/user";
 import { checkUserExists } from "../services/userService";
+import { userRegisterSchema } from "../schema/user.schema";
 
 //Función para crear un nuevo usuario
 export const createUser = async (req: Request, res: Response) => {
-    const {name,username,email,password} = req.body;
     try {
 
+            const validatedData = userRegisterSchema.parse(req.body);
         //Invoca la función para validar los datos del usuario
-        await checkUserExists(username, email);
+        await checkUserExists(validatedData.username, validatedData.email);
 
         //Despues de la validación, continua con la creación del usuario
         const newUser = new User({
-            name,
-            username,
-            email,
-            password
+            validatedData
         })
 
         //Guarda el nuevo plato en la base de datos.
