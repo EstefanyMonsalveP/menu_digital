@@ -11,6 +11,6 @@ export const generateToken = async(payload: object) =>{
 };
 
 //Función para verificar el token
-export const verifyToken = async (token:string) => {
-    return jwt.sign(token, JWT_SECRET)
+export const verifyToken = (token:string) => {
+    return jwt.verify(token, JWT_SECRET)
 }
