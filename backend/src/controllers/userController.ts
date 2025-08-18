@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User} from "../models/user";
-import { checkUserExists } from "../../services/userService";
+import { checkUserExists } from "../services/userService";
 
 //Función para crear un nuevo usuario
 export const createUser = async (req: Request, res: Response) => {

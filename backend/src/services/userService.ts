@@ -1,4 +1,4 @@
-import { User} from "../src/models/user";
+import { User} from "../models/user";
 
 //Función para validar si existe el username y email
 export const checkUserExists = async (username:string, email:string) => {
