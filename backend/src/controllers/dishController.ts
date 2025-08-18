@@ -110,6 +110,6 @@ export const removeDish = async (req: Request, res: Response) => {
         return res.status(200).json({ message: "Plato eliminado de la carta"});
     }catch(error){
         //Envia una respuesta del error con el mensaje
-    return res.status(500).json({ error: "Error al eliminar el plato" });
+        return res.status(500).json({ error: "Error al eliminar el plato" });
     }
 }
