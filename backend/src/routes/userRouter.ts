@@ -6,4 +6,6 @@ const userRouter = Router();
 //Ruta para crear un nuevo usuario
 userRouter.post("/", createUser);
 
+//Ruta para el login
+
 export default userRouter;
