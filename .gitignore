@@ -1,5 +1,5 @@
-#Ignorar node_modules dentro del backend
-backend/node_modules/
-
-#Ignorar node_modules dentro del backend
 backend/.env
+
+backend/node_modules
+
+.vscode
