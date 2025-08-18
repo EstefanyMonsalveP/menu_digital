@@ -5,11 +5,11 @@ import { Dish } from "../models/dish";
 export const createDish = async (req: Request, res: Response) => {
     try{
         //Extrae las variables del cuerpo de la interfaz
-        const {urlImage, dishName, description, price} = req.body;
+        const {image, dishName, description, price} = req.body;
 
         //Crea una nueva instancia del modelo Dish con los datos recibidos
         const newDish =  new Dish ({
-            urlImage,
+            image,
             dishName,
             description,
             price
@@ -23,6 +23,7 @@ export const createDish = async (req: Request, res: Response) => {
     }catch(error){
         //Envia una respuesta del error con el mensaje
         res.status(500).json({ error: "Error al crear el plato" });
+        console.log("error al crear el plato", error)
     }
 }
 
@@ -68,7 +69,7 @@ export const removeDish = async (req: Request, res: Response) => {
     //Toma el id de la URL
     const {id} = req.params;
     try{
-        
+
     //Busca el id del plato, pasa los valores y lo actualiza.
     await Dish.findByIdAndDelete(id);
 
