@@ -46,7 +46,7 @@ export const updateDish = async (req: Request, res: Response) => {
     //Toma el id de la URL
     const {id} = req.params;
     //Obtiene los datos del cuerpo 
-    const {updateData} = req.body;
+    const updateData = req.body;
     try{
         
         //Busca el id del plato, pasa los valores y lo actualiza.
