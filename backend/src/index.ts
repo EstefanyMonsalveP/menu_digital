@@ -4,11 +4,17 @@ import dishRouter from "./routes/dishRouter";
 import userRouter from "./routes/userRouter";
 import authRouter from "./routes/authRouter";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = Express();
 
 app.use(Express.json());
 app.use(cookieParser());
+
+app.use(cors({
+    origin:'http://localhost:4200/',
+    credentials:true
+}));
 
 
 //Obtiene el puerto desde la variable de entorno
