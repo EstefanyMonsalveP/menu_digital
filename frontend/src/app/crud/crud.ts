@@ -17,15 +17,13 @@ export class CrudComponent{
      { _id: '1', image: 'https://picsum.photos/200', dishName: 'Pizza', description: 'Pizza con queso', price: 20000 },
     { _id: '2', image: 'https://picsum.photos/200', dishName: 'Hamburguesa', description: 'Con doble carne', price: 18000 }
   ]);
-  //Plato que esta siendo editado o eliminado (Null si esta creando uno nuevo)
-  editingDish = signal<Dish | null>(null);
+
   //Datos del formulario
-  formDish = signal<Dish>({
-    image: '',
-    dishName: '',
-    description: '',
-    price: 0
-  });
+  formNewDish = signal<Dish| null>(null);
+    //Plato que esta siendo editado o eliminado (Null si esta creando uno nuevo)
+  editingDish = signal<Dish | null>(null);
+  //Formulario que se esta editando
+  formEditingDish = signal<Dish| null>(null);
 
   //Inyectar el servicio en el constructor.
   constructor(private dishService: DishService) {
@@ -38,24 +36,34 @@ export class CrudComponent{
     this.dishService.getDishes().subscribe(data => this.dishes.set(data));
   }
 
-  //Rellena el formulario con los datos del plato seleccionado para editar
-  selectDish(dish: Dish){
-    this.editingDish.set(dish);
-    this.formDish.set({...dish});
-  }
+  openNewDishForm() {
+  this.editingDish.set(null); // asegurarse de no editar otro
+  this.formNewDish.set({ image:'', dishName:'', description:'', price:0 });
+}
 
   //Guarda el plato: Actualiza uno existente o crea uno nuevo
   saveDish(dish:Dish){
-    if(this.editingDish()) {
-      this.dishService.updateDish(this.editingDish()!._id!, dish).subscribe(() => {
-        this.loadDishes();
-      });
-    } else {
       this.dishService.addDish(dish).subscribe(() => {
         this.loadDishes();
-        });
-    }
+        this.formNewDish.set(null);
+      }
+  )}
+
+  //Rellena el formulario con los datos del plato seleccionado para editar
+  selectDish(dish: Dish){
+    this.editingDish.set(dish);
+    this.formEditingDish.set({...dish});
   }
+
+  // Actualizar un plato existente
+  editDish() {
+  if (!this.editingDish()) return;
+  this.dishService.updateDish(this.editingDish()!._id!, this.formEditingDish()!).subscribe(() => {
+    this.loadDishes();//Refresca los datos
+    this.editingDish.set(null); //Sale del modo de edición
+    this.formEditingDish.set(null); //Limpia el formulario
+  });
+}
 
   //Elimina un plato segun el id
   deleteDish(id: string) {
