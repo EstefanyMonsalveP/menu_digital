@@ -1,1 +1,31 @@
-<p>crud works!</p>
+<div class="cards">
+  @for (dish of dishes(); track dish._id) {
+    <div class="card">
+      <img [src]="dish.image" alt="{{ dish.dishName }}">
+      <h3>{{ dish.dishName }}</h3>
+      <p>{{ dish.description }}</p>
+      <p><strong>${{ dish.price }}</strong></p>
+      <button (click)="selectDish(dish)">Editar</button>
+      <button (click)="deleteDish(dish._id!)">Eliminar</button>
+    </div>
+  }
+  
+    <!-- Tarjeta para añadir nuevo -->
+    <div class="card add-card" (click)="editingDish.set(null); formDish.set({image:'', dishName:'', description:'', price:0})">
+      <span>+</span>
+      <p>Agregar nuevo plato</p>
+    </div>
+  </div>
+
+  @if (formDish()) {
+  <div>
+    <h2>{{ editingDish() ? 'Editar Plato' : 'Nuevo Plato' }}</h2>
+    <form (ngSubmit)="saveDish(formDish()!)">
+      <input type="text" placeholder="URL Imagen" [(ngModel)]="formDish()!.image" name="image" />
+      <input type="text" placeholder="Nombre" [(ngModel)]="formDish()!.dishName" name="dishName" />
+      <input type="text" placeholder="Descripción" [(ngModel)]="formDish()!.description" name="description" />
+      <input type="number" placeholder="Precio" [(ngModel)]="formDish()!.price" name="price" />
+      <button type="submit">Guardar</button>
+    </form>
+  </div>
+}

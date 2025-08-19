@@ -1,18 +1,22 @@
 import { Component, signal, effect } from '@angular/core';
 import { Dish } from '../models/dish';
 import { DishService } from '../services/dish.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-crud',
   standalone:true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './crud.html',
   styleUrl: './crud.css'
 })
 export class CrudComponent{
 
   //Lista de los platos
-  dishes = signal<Dish[]>([]);
+  dishes = signal<Dish[]>([
+     { _id: '1', image: 'https://picsum.photos/200', dishName: 'Pizza', description: 'Pizza con queso', price: 20000 },
+    { _id: '2', image: 'https://picsum.photos/200', dishName: 'Hamburguesa', description: 'Con doble carne', price: 18000 }
+  ]);
   //Plato que esta siendo editado o eliminado (Null si esta creando uno nuevo)
   editingDish = signal<Dish | null>(null);
   //Datos del formulario
