@@ -16,7 +16,7 @@ export class authService{
     //Llama el servicio para validar las credenciales del usuario
     login(email: string, password:string): Observable<{userName: string}>{
         return this.http.post<{userName: string}>(
-            `${this.apiUrl}/login`,
+            `${this.apiUrl}`,
             { email, password },
             { withCredentials: true }
         );
