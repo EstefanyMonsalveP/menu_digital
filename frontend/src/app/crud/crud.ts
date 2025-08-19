@@ -4,6 +4,7 @@ import { DishService } from '../services/dish.service';
 
 @Component({
   selector: 'app-crud',
+  standalone:true,
   imports: [],
   templateUrl: './crud.html',
   styleUrl: './crud.css'
@@ -12,7 +13,7 @@ export class CrudComponent{
 
   //Lista de los platos
   dishes = signal<Dish[]>([]);
-  //Plato que esta siendo creado o eliminado (Null si esta creando uno nuevo)
+  //Plato que esta siendo editado o eliminado (Null si esta creando uno nuevo)
   editingDish = signal<Dish | null>(null);
   //Datos del formulario
   formDish = signal<Dish>({
