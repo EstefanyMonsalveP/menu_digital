@@ -14,7 +14,7 @@ export const conexionDB = async (): Promise <void> => {
         await mongoose.connect(MONGO_URI);
         console.log("Conexion exitosa");
     }catch (error){
-        console.log("Error en la conexion");
+        console.log("Error en la conexion",error);
         process.exit(1); //Cerrar el proceso si se presenta error.
     }
 }
