@@ -79,8 +79,7 @@ npm install
 ng serve
 Abre tu navegador en http://localhost:4200 `(Puerto predeterminado`)
 
-🔧 Tecnologías
-Actualmente lo pones mezclado al final. Mejor crear una sección 🔧 Librerías y herramientas:
+🔧 Librerías y herramientas:
 
 Node.js, Express
 
