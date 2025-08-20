@@ -33,11 +33,24 @@ export class authService{
     }
     //Metodo para cerrar sesion
     //Llama el servicio para eliminar la cookie de sesion
-    logout() {
+    logout():  Observable<any> {
     return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
     .pipe(
         tap(() => this.currentUserName.set('')) // limpiar el signal al logout
     );
   }
+
+  //Llama el servicio para enviar correo de recuperacion de email
+  sendRecoveryEmail(email:string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/recover-password`, email)
+  }
+
+  //Llama el servicio para actualizar la contraseña
+    resetPassword(token: string, password: string, confirmPassword: string): Observable<any> {
+        return this.http.post(`${this.apiUrl}/reset-password`, 
+        { token, password, confirmPassword }, 
+        { withCredentials: true }
+    );
+    }
 
 }

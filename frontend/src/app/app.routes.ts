@@ -6,5 +6,7 @@ import { Registro } from './registro/registro';
 export const routes: Routes = [
     {path: 'crud', component: CrudComponent},
     {path: 'login', component: Login},
-    {path: 'registro', component: Registro}
+    {path: 'registro', component: Registro},
+    {path: 'forgot-password', component: Registro},
+    
 ];
