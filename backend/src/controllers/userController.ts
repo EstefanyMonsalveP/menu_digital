@@ -11,7 +11,7 @@ export const createUser = async (req: Request, res: Response) => {
         const validatedData = userRegisterSchema.parse(req.body);
 
         //Invoca la función para validar el username y email.
-        await checkUserExists(validatedData.username, validatedData.email);
+        await checkUserExists(validatedData.name, validatedData.email);
 
         //Despues de la validación, continua con la creación del usuario
         const newUser = new User(validatedData)
