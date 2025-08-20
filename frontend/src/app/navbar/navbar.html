@@ -2,17 +2,15 @@
   <a class="navbar-brand" href="#">Carta digital</a>
 
   <div class="collapse navbar-collapse justify-content-end">
-    <ul class="navbar-nav">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-           data-bs-toggle="dropdown" aria-expanded="false">
-          {{ authService.currentUserName() }}
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-          <li>
-            <button class="dropdown-item" (click)="logout()">Cerrar sesión</button>
-          </li>
-        </ul>
+    <ul class="navbar-nav align-items-center">
+      <!-- Nombre de usuario -->
+      <li class="nav-item me-3">
+        <span class="nav-link">{{ authService.currentUserName() }}</span>
+      </li>
+
+      <!-- Botón de cerrar sesión -->
+      <li class="nav-item">
+        <button class="btn btn-outline-dark" (click)="logout()">Cerrar sesión</button>
       </li>
     </ul>
   </div>
