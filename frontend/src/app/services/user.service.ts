@@ -20,7 +20,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   // Crear un usuario (registro)
-  createUser(user: User): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}`, user, { withCredentials: true });
-  }
+  createUser(user: { name: string; email: string; password: string }) {
+  return this.http.post(`${this.apiUrl}`, user, { withCredentials: true });
+}
 }
