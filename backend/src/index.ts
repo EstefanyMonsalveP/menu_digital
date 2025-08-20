@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import Express from "express";
 import { conexionDB } from "./data/db";
 import dishRouter from "./routes/dishRouter";

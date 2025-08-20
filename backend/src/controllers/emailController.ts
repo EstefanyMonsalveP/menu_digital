@@ -3,7 +3,9 @@ import { Request,Response } from "express";
 import { generateToken } from "../utils/tokenUtils";
 import { User } from "../models/user";
 
+
 export const recoveryPassoword = async (req: Request, res: Response) => {
+    console.log("Llegó petición a recoveryPassword", req.body);
     const {email} = req.body;
 
     try {
@@ -12,8 +14,10 @@ export const recoveryPassoword = async (req: Request, res: Response) => {
         if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
 
         //Crear token o link de recuperación (puedes usar JWT o un UUID)
-        const resetToken = generateToken({userId: user.id});  // tu función para generar token
+        const resetToken =  generateToken({userId: user.id}); 
+        console.log("Reset token:", resetToken);
         const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+        console.log("Reset link:", resetLink);
 
         //Enviar correo con el link
         await sendRecoveryEmail(email, resetLink);
