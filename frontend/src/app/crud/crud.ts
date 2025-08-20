@@ -2,11 +2,12 @@ import { Component, signal, effect } from '@angular/core';
 import { Dish } from '../models/dish';
 import { DishService } from '../services/dish.service';
 import { FormsModule } from '@angular/forms';
+import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-crud',
   standalone:true,
-  imports: [FormsModule],
+  imports: [FormsModule, Navbar],
   templateUrl: './crud.html',
   styleUrl: './crud.css'
 })
