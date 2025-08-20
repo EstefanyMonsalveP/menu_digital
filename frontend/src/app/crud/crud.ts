@@ -12,12 +12,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class CrudComponent{
 
-  //Lista de los platos
-  dishes = signal<Dish[]>([
-     { _id: '1', image: 'https://picsum.photos/200', dishName: 'Pizza', description: 'Pizza con queso', price: 20000 },
-    { _id: '2', image: 'https://picsum.photos/200', dishName: 'Hamburguesa', description: 'Con doble carne', price: 18000 }
-  ]);
-
+   // Lista de platos 
+  dishes = signal<Dish[]>([]);
   //Datos del formulario
   formNewDish = signal<Dish| null>(null);
     //Plato que esta siendo editado o eliminado (Null si esta creando uno nuevo)
@@ -33,7 +29,10 @@ export class CrudComponent{
 
   //Metodo para cargar todos los platos
   loadDishes() {
-    this.dishService.getDishes().subscribe(data => this.dishes.set(data));
+    this.dishService.getDishes().subscribe({
+    next: res => this.dishes.set(res.data),  // <--- extrae el array aquí
+    error: err => console.error('error al cargar los platos', err)
+  });
   }
 
   openNewDishForm() {
@@ -43,10 +42,13 @@ export class CrudComponent{
 
   //Guarda el plato: Actualiza uno existente o crea uno nuevo
   saveDish(dish:Dish){
-      this.dishService.addDish(dish).subscribe(() => {
-        this.loadDishes();
-        this.formNewDish.set(null);
-      }
+      this.dishService.addDish(dish).subscribe({
+        next: () => {
+          this.loadDishes();
+          this.formNewDish.set(null);
+        },
+        error: err => console.error('Error al guardar plato:', err)
+      }  
   )}
 
   //Rellena el formulario con los datos del plato seleccionado para editar
@@ -58,16 +60,23 @@ export class CrudComponent{
   // Actualizar un plato existente
   editDish() {
   if (!this.editingDish()) return;
-  this.dishService.updateDish(this.editingDish()!._id!, this.formEditingDish()!).subscribe(() => {
-    this.loadDishes();//Refresca los datos
-    this.editingDish.set(null); //Sale del modo de edición
-    this.formEditingDish.set(null); //Limpia el formulario
-  });
+  this.dishService.updateDish(this.editingDish()!._id!, this.formEditingDish()!).subscribe({
+    next: () => {
+      this.loadDishes();
+      this.editingDish.set(null);
+      this.formEditingDish.set(null);
+    },
+    error: err => console.error('Error al editar plato:', err)
+  }
+  )
 }
 
   //Elimina un plato segun el id
   deleteDish(id: string) {
-    this.dishService.deleteDish(id).subscribe(() => this.loadDishes());
+    this.dishService.deleteDish(id).subscribe({
+      next: ()=>
+        this.loadDishes(),
+      error: err=> console.error('Error al eliminar el plato', err)
+    });
   }
-
 }
