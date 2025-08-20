@@ -27,12 +27,12 @@ export class CrudComponent{
     this.loadDishes();
   }
 
-  //Metodo para cargar todos los platos
+  // Cargar platos desde la API
   loadDishes() {
     this.dishService.getDishes().subscribe({
-    next: res => this.dishes.set(res.data),  // <--- extrae el array aquí
-    error: err => console.error('error al cargar los platos', err)
-  });
+      next: data => this.dishes.set(data), // data ya es un array gracias al map del servicio
+      error: err => console.error('Error al cargar platos', err)
+    });
   }
 
   openNewDishForm() {
