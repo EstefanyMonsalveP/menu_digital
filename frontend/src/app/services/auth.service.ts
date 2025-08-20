@@ -41,9 +41,10 @@ export class authService{
   }
 
   //Llama el servicio para enviar correo de recuperacion de email
-  sendRecoveryEmail(email:string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/recover-password`, email)
-  }
+  sendRecoveryEmail(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/recover-password`, { email }, { withCredentials: true });
+}
+
 
   //Llama el servicio para actualizar la contraseña
     resetPassword(token: string, password: string, confirmPassword: string): Observable<any> {

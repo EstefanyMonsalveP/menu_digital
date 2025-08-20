@@ -11,22 +11,20 @@ import { FormsModule } from '@angular/forms';
 })
 export class ForgotPassword {
 
-   email = '';
-  password = '';
-  confirmPassword = '';
-  token = '';
-
+  email = '';
   step = signal<'email' | 'reset'>('email'); // controla si estamos en email o reset
   errors = signal<string[]>([]);
   successMessage = signal('');
 
   constructor(private authService: authService, private router: Router) {}
 
+  
   //Enviar email
   sendRecoveryEmail() {
+    console.log("Email que voy a enviar:", this.email);
     this.authService.sendRecoveryEmail(this.email).subscribe({
       next: () =>{
-        this.successMessage.set('Usuario creado correctamente. Ahora inicia sesión.');
+        this.successMessage.set('Correo enviado. Revise su bandeja');
         this.step.set('reset')
       },
       error: err => this.errors.set([err.error?.message || 'Error enviando correo'])
