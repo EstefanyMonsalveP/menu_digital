@@ -6,6 +6,7 @@ import { ForgotPassword } from './forgot-password/forgot-password';
 import { ResetPassword } from './reset-password/reset-password';
 
 export const routes: Routes = [
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
     {path: 'crud', component: CrudComponent},
     {path: 'login', component: Login},
     {path: 'registro', component: Registro},
