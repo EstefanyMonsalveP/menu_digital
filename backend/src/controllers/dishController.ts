@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { Dish } from "../models/dish";
+import { AuthRequest } from "../types/authRequest";
 
 //Funcion para crear un nuevo plato 
-export const createDish = async (req: Request, res: Response) => {
+export const createDish = async (req: AuthRequest, res: Response) => {
     try{
 
         //Validar la sesion del usuario;
@@ -33,7 +34,7 @@ export const createDish = async (req: Request, res: Response) => {
 }
 
 //Funcion para crear un nuevo plato 
-export const getUserDishes = async (req: Request, res: Response) => {
+export const getUserDishes = async (req: AuthRequest, res: Response) => {
     try{
 
         const userId = req.user?.id;
@@ -49,7 +50,7 @@ export const getUserDishes = async (req: Request, res: Response) => {
 }
 
 //Funcion para Actualizar un plato
-export const updateDish = async (req: Request, res: Response) => {
+export const updateDish = async (req: AuthRequest, res: Response) => {
     //Toma el id de la URL
     const {id} = req.params;
     //Obtiene los datos del cuerpo 
@@ -85,7 +86,7 @@ export const updateDish = async (req: Request, res: Response) => {
 }
 
 //Funcion para eliminar un plato
-export const removeDish = async (req: Request, res: Response) => {
+export const removeDish = async (req: AuthRequest, res: Response) => {
     //Toma el id de la URL
     const {id} = req.params;
     const userId = req.user?.id;

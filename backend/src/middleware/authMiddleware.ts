@@ -1,8 +1,9 @@
 import { verifyToken } from "../utils/tokenUtils";
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
+import { AuthRequest } from "../types/authRequest";
 
 //Middleware para proteger las rutas de navegación
-export const authMiddleware = async (req: Request, res: Response, next: NextFunction) =>{
+export const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) =>{
     //Obtiene el token desde la cookie
     const token = req.cookies?.token;
 
