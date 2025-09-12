@@ -7,7 +7,7 @@ const JWT_EXPIRES_IN = '1h';
 if(!JWT_SECRET) throw new Error("La variable JWT no esta definida");
 
 //Funcion para generar un nuevo token con tiempo de expieracion
-export const generateToken = async (payload: object) =>{
+export const generateToken = async (payload: object): Promise <string> => {
     return jwt.sign(payload, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN});
 };
 
