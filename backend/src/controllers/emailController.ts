@@ -14,7 +14,7 @@ export const recoveryPassoword = async (req: Request, res: Response) => {
         if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
 
         //Crear token o link de recuperación (puedes usar JWT o un UUID)
-        const resetToken =  generateToken({userId: user.id}); 
+        const resetToken = await generateToken({userId: user.id}); 
         console.log("Reset token:", resetToken);
         const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
         console.log("Reset link:", resetLink);
