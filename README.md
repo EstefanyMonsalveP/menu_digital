@@ -56,17 +56,8 @@ cd backend
 2. Instala dependencias:
 npm install
 
-3. Desarrollo (recomendado con depuración)
-
-Debido a cómo se cargan las variables de entorno y TypeScript, ejecutar npm run dev directamente puede no funcionar correctamente.
-
-Se recomienda iniciar la aplicación mediante el depurador de tu IDE (por ejemplo, VS Code):
-
-Abrir la paleta de ejecución en VS Code.
-
-Seleccionar Run and Debug con la configuración de Node.js.
-
-Esto asegura que TypeScript y las variables de entorno se carguen correctamente
+##Backend
+npm run dev       
 
 verificar que el launch abra estas variables en la configuracion:
 "runtimeArgs": ["-r", "ts-node/register/transpile-only"],
