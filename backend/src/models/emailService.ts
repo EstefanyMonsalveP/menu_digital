@@ -10,6 +10,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// Función para enviar el correo de recuperación de contraseña
 export const sendRecoveryEmail = async (to: string, resetLink: string) => {
   try {
     await transporter.sendMail({
@@ -23,6 +24,25 @@ export const sendRecoveryEmail = async (to: string, resetLink: string) => {
       `
     });
     console.log('Correo de recuperación enviado a:', to);
+  } catch (error) {
+    console.error('Error enviando correo:', error);
+  }
+};
+
+//Funcion para enviar correo de confirmación de cuenta
+export const sendConfirmationUserEmail= async (to: string, confirmUrl: string) => {
+  try {
+    await transporter.sendMail({
+      from: `"Mi App Menu Digital" <${process.env.EMAIL_USER}>`,  
+      to,                                            
+      subject: 'Confirmar usuario',
+      html: `
+        <h1>Confirmar usuario en Menu Digital</h1>
+        <p>Si usted desconoce el motivo de este correo, hacer caso omiso</p>
+        <p>Si desea confirmar su usuario en Mi App haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+        <a href="${confirmUrl}">${confirmUrl}</a>
+      `
+    });
   } catch (error) {
     console.error('Error enviando correo:', error);
   }
