@@ -4,6 +4,7 @@ import { Login } from './login/login';
 import { Registro } from './registro/registro';
 import { ForgotPassword } from './forgot-password/forgot-password';
 import { ResetPassword } from './reset-password/reset-password';
+import { ConfirmAccount } from './confirm-account/confirm-account';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -12,5 +13,5 @@ export const routes: Routes = [
     {path: 'registro', component: Registro},
     {path: 'forgot-password', component: ForgotPassword},
     {path: 'reset-password', component: ResetPassword},
-
+    {path: 'confirm-account', component: ConfirmAccount},
 ];

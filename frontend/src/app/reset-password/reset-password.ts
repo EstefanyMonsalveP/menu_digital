@@ -48,7 +48,7 @@ export class ResetPassword {
     if (password.length < 8) errors.push('La contraseña debe tener al menos 8 caracteres');
     if (!/[a-zA-Z]/.test(password)) errors.push('Debe contener al menos una letra');
     if (!/\d/.test(password)) errors.push('Debe contener al menos un número');
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) errors.push('Debe contener un símbolo');
+    if (!/[!@#$%^&*(),.?":{}|<>+-]/.test(password)) errors.push('Debe contener un símbolo');
     if (password !== confirmPassword) errors.push('Las contraseñas no coinciden');
     return errors;
   }
