@@ -1,11 +1,10 @@
-import { sendRecoveryEmail } from "../models/emailService";
+import { sendConfirmationUserEmail, sendRecoveryEmail } from "../services/emailService";
 import { Request,Response } from "express";
 import { generateToken } from "../utils/tokenUtils";
 import { User } from "../models/user";
 
 
 export const recoveryPassoword = async (req: Request, res: Response) => {
-    console.log("Llegó petición a recoveryPassword", req.body);
     const {email} = req.body;
 
     try {

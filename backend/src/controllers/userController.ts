@@ -3,6 +3,10 @@ import { User} from "../models/user";
 import { checkUserExists } from "../services/userService";
 import { userRegisterSchema } from "../schema/user.schema";
 import { ZodError } from "zod";
+import jwt from "jsonwebtoken";
+import { sendConfirmationUserEmail } from "../services/emailService";
+
+const JWT_SECRET = process.env.JWT_SECRET!;
 
 //Función para crear un nuevo usuario
 export const createUser = async (req: Request, res: Response) => {
@@ -19,7 +23,15 @@ export const createUser = async (req: Request, res: Response) => {
         //Guarda el nuevo usuario en la base de datos.
         await newUser.save();
 
-        return res.status(201).json({message: "Usuario creado con exito"})
+         //Generar token de confirmación
+        const token = jwt.sign({ userId: newUser._id }, JWT_SECRET, {
+        expiresIn: '1h',
+        });
+
+        //Enviar email
+        await sendConfirmationUserEmail(newUser.email, token);
+
+        return res.status(201).json({message: "Usuario creado con exito, por favor revisar su correo y confirmar la cuenta"})
     } catch (error) {
         //Envia los mensajes de error si provienen de Zod
         if (error instanceof ZodError) {
