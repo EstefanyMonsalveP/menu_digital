@@ -60,17 +60,14 @@ export const resetPassword = async (req: Request, res: Response) => {
 
   try {
     // Verificar el token JWT
-    const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
 
     // Buscar usuario por id
-    const user = await User.findById(decoded.id);
+    const user = await User.findById(decoded.userId);
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
 
-    // Hashear la nueva contraseña
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     // Actualizar la contraseña del usuario
-    user.password = hashedPassword;
+    user.password = password;
     await user.save();
 
     return res.status(200).json({ message: 'Contraseña actualizada correctamente' });
