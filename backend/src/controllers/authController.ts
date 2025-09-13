@@ -77,6 +77,7 @@ export const resetPassword = async (req: Request, res: Response) => {
   }
 }
 
+//Función para confirmar la cuenta del usuario
 export const confirmAccount = async (req: Request, res: Response) => {
     const { token } = req.query;
 
