@@ -3,13 +3,9 @@ import { Request, Response } from "express";
 import { resetPasswordSchema } from "../schema/resetPassword.schema";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user";
-import { JwtPayload } from "jsonwebtoken";
+import { verifyToken } from "../utils/tokenUtils";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
-
-interface UserJwtPayload extends JwtPayload{
-  userId: string;
-}
 
 //Función para manejar la validacion de las credenciales
 export const login = async (req: Request, res:Response) => {
@@ -64,7 +60,7 @@ export const resetPassword = async (req: Request, res: Response) => {
 
   try {
     // Verificar el token JWT
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+    const decoded = verifyToken(token);
 
     // Buscar usuario por id
     const user = await User.findById(decoded.userId);
@@ -84,22 +80,18 @@ export const resetPassword = async (req: Request, res: Response) => {
 export const confirmAccount = async (req: Request, res: Response) => {
     const { token } = req.query;
 
-    if(!token){
-      res.status(400).json({message: "El token no es valido o ha expirado"});
+    //Si no encuentra el token o no es un string, enviar mensaje de error
+    if(!token || typeof token !== 'string'){
+      return res.status(400).json({message: "El token no es valido o ha expirado"});
     }
 
-    //Verficar el token
     try {
-      const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+          //Verficar el token
+      const decoded = verifyToken(token as string);
 
-      //Buscar el usuario por id
-      const user = await User.findById(decoded.userId);
-      if(!user) return res.status(404).json({message: "Usuario no encontrado"});
-
-
+      //Tomar el id del usuario del token decodificado
+      const user = decoded.userId ; 
 
 
-
-
-    }
+    }catch(error){}
 }

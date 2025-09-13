@@ -12,6 +12,6 @@ export const generateToken = async (payload: object): Promise <string> => {
 };
 
 //Función para verificar el token
-export const verifyToken = (token:string) => {
+export const verifyToken = (token:string): UserJwtPayload => {
     return jwt.verify(token, JWT_SECRET) as UserJwtPayload;
 }

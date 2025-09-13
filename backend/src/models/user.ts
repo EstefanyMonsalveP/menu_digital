@@ -7,6 +7,7 @@ export interface IUser extends Document {
     email: string;
     password: string;
     comparePassword(password: string): Promise <boolean>;
+    isConfirmed: boolean;
 }
 
 //Esquema para la colección de usuarios
@@ -14,6 +15,7 @@ const userSchema : Schema<IUser>  = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    isConfirmed: { type: Boolean, default: false },
 })
 
 //Middleware para hashear la contraseña antes de insertarla
