@@ -82,7 +82,7 @@ export const confirmAccount = async (req: Request, res: Response) => {
 
     //Si no encuentra el token o no es un string, enviar mensaje de error
     if(!token || typeof token !== 'string'){
-      return res.status(400).json({message: "El token no es valido o ha expirado"});
+      return res.status(400).json({message: "Token no proporcionado o inválido"});
     }
 
     try {
@@ -92,6 +92,15 @@ export const confirmAccount = async (req: Request, res: Response) => {
       //Tomar el id del usuario del token decodificado
       const user = decoded.userId ; 
 
+      //Confirmar la cuenta del usuario
+      user.isConfirmed = true;
 
-    }catch(error){}
+      //Guardar los cambios en la base de datos
+      await user.save();
+
+      return res.status(200).json({message: "Cuenta confirmada correctamente, ya puede iniciar sesión"});
+    }catch(error){
+      console.log("Error al confirmar la cuenta", error);
+      return res.status(400).json({message: "El token no es valido o ha expirado"});
+    }
 }
