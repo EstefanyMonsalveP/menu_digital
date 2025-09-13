@@ -54,4 +54,11 @@ export class authService{
     );
     }
 
+    //Llama el servicio para confirmar la cuenta
+    confirmAccount(token: string): Observable<any> {
+        return this.http.post(`${this.apiUrl}/confirm-account`, 
+        { token }, 
+        { withCredentials: true }
+    );
+    }
 }
