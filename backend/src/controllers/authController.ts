@@ -1,7 +1,6 @@
 import { authenticateUser } from "../services/authService";
 import { Request, Response } from "express";
 import { resetPasswordSchema } from "../schema/resetPassword.schema";
-import jwt from "jsonwebtoken";
 import { User } from "../models/user";
 import { verifyToken } from "../utils/tokenUtils";
 
