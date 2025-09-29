@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import type { UserJwtPayload } from "../types";
+import type { UserJwtPayload } from "../types/UsertJwtPayLoad";
 
 const JWT_SECRET = process.env.JWT_SECRET; 
 const JWT_EXPIRES_IN = '1h';

@@ -41,13 +41,14 @@ app.use("/api/auth", authRouter)
 console.log("Configurando la ruta de autenticacion")
 
 // Servir archivos estáticos del frontend Angular
-const angularDistPath = path.join(__dirname, "../../frontend/dist/frontend");
+const angularDistPath = path.join(__dirname, "../../frontend/dist/frontend/browser");
 app.use(Express.static(angularDistPath));
 
 // Redirigir cualquier ruta no reconocida al index.html de Angular
-app.get("*", (req, res) => {
+app.get(/.*/, (req, res) => {
     res.sendFile(path.join(angularDistPath, "index.html"));
 });
+
 
 //Inicializa el servidor en el puerto definido
 app.listen(PORT, () => {
