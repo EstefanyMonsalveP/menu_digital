@@ -5,3 +5,7 @@ backend/node_modules
 .vscode
 
 backend/.env.production
+
+backend/dist
+
+backend/*.js.map
