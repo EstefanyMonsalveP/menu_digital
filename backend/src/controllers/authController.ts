@@ -77,7 +77,7 @@ export const resetPassword = async (req: Request, res: Response) => {
 
 //Función para confirmar la cuenta del usuario
 export const confirmAccount = async (req: Request, res: Response) => {
-    const { token } = req.query;
+    const { token } = req.body;
 
     //Si no encuentra el token o no es un string, enviar mensaje de error
     if(!token || typeof token !== 'string'){
