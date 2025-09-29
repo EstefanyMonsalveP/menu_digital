@@ -43,6 +43,8 @@ FRONTEND_URL=http://localhost:4200
 - `JWT_SECRET`: cualquier cadena aleatoria para firmar los tokens JWT (si se usa autenticación).  
 - En desarrollo, MongoDB Atlas solo permitirá tu IP, asegúrate de añadir tu IP en la lista de IP permitidas en Atlas.
 
+--- 
+
 
 ## 🏃‍♂️ Ejecutar el proyecto
 
@@ -64,8 +66,9 @@ verificar que el launch abra estas variables en la configuracion:
       "args": ["${workspaceFolder}/backend/src/index.ts"],
       "cwd": "${workspaceFolder}/backend"
 
-### 2️⃣ Frontend
+##  2️⃣ Frontend
 
+1. Ingresa a la carpeta `frontend`:
 npm install
 ng serve
 Abre tu navegador en http://localhost:4200 `(Puerto predeterminado`)
@@ -73,16 +76,45 @@ Abre tu navegador en http://localhost:4200 `(Puerto predeterminado`)
 🔧 Librerías y herramientas:
 
 Node.js, Express
-
 TypeScript
-
 MongoDB + Mongoose
-
 JWT para autenticación
-
 Zod para validación de datos
-
 bcrypt para hashing de contraseñas
-
 Bootstrap para estilos
+
+## 📝 Prerrequisitos
+- Node.js >= 22.x
+- npm >= 10.x
+- Angular CLI >= 20.x
+- MongoDB Atlas account
+
+---
+
+## ⚡ Scripts útiles
+
+### Backend
+- `npm run dev` → corre el servidor con nodemon y TypeScript.
+- `npm run build` → transpila TypeScript a JavaScript en `/dist`.
+- `npm start` → ejecuta el código compilado en `/dist`.
+
+### Frontend
+- `ng serve` → corre la aplicación Angular en modo desarrollo.
+- `ng build` → genera la build para producción en `/dist`.
+
+---
+
+## 📌 Endpoints principales
+
+### Auth
+- `POST /api/auth` → Iniciar sesión
+
+### Users
+- `POST /api/users` → Registrar usuario
+
+### Platos
+- `GET /api/dishes` → Listar platos
+- `POST /api/dishes` → Crear plato
+- `PUT /api/dishes/:id` → Actualizar plato
+- `DELETE /api/dishes/:id` → Eliminar plato
 
