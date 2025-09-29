@@ -26,12 +26,11 @@ export const login = async (req: Request, res:Response) => {
         return res.status(200).json({message: 'Inicio de sesión exitoso',
             user: {
             id: user._id,
-            username: user.name
+            name: user.name
       }});
-    } catch (error) {
-        console.log("Error al iniciar sesion",error)
+    } catch (error:any) {
         //Envia mensaje de error y codigo
-        return res.status(500).json({message: "Error al iniciar sesion"});
+        return res.status(400).json({message: error.message || "Error al iniciar sesion"});
     }
 }
 
