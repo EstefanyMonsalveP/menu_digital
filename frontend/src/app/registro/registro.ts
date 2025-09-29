@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -28,7 +27,7 @@ export class Registro {
     if (password.length < 8) errors.push("La contraseña debe tener al menos 8 caracteres");
     if (!/[a-zA-Z]/.test(password)) errors.push("Debe contener al menos una letra");
     if (!/\d/.test(password)) errors.push("Debe contener al menos un número");
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) errors.push("Debe contener un símbolo");
+    if (!/[!@#$%^&*(),.?":{}|<>+-]/.test(password)) errors.push("Debe contener un símbolo");
     if (password !== confirmPassword) errors.push("Las contraseñas no coinciden");
 
     return errors;
@@ -51,13 +50,17 @@ export class Registro {
       password: this.password
     }).subscribe({
       next: () => {
-        this.successMessage.set('Usuario creado correctamente. Ahora inicia sesión.');
+        this.successMessage.set('Usuario creado correctamente. Revisar correo para confirmar la cuenta.');
         this.name = '';
         this.email = '';
         this.password = '';
         this.confirmPassword = '';
       },
-      error: err => console.error(err)
+      error: err => {console.error(err);
+      const backendMessage = err?.error?.message || err?.message || 'Error desconocido al registrar usuario';
+      this.errors.set([backendMessage]);
+      this.successMessage.set('');
+      }
     });
   }
 }

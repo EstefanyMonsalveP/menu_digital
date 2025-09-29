@@ -19,15 +19,15 @@ export class authService{
     constructor(private http: HttpClient){}
     //Metodo para inciar la sesion
     //Llama el servicio para validar las credenciales del usuario
-    login(email: string, password:string): Observable<{userName: string}>{
-        return this.http.post<{userName: string}>(
+    login(email: string, password:string): Observable<{message: string, user: {id: string, name: string}}>{
+        return this.http.post<{message: string, user: {id: string, name: string}}>(
             `${this.apiUrl}`,
             { email, password },
             { withCredentials: true }
         ).pipe(
             tap(response => {
                 // Guardar el username en el signal
-                this.currentUserName.set(response.userName);
+                this.currentUserName.set(response.user.name);
             })
         );
     }

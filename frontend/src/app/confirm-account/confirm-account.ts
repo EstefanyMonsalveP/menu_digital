@@ -18,6 +18,9 @@ export class ConfirmAccount {
       // Tomamos el token de la URL
       this.route.queryParams.subscribe(params => {
         this.token = params['token'] || '';
+        if(this.token) {
+          this.confirmAccount(this.token);
+        }
       });
     }
   
@@ -25,11 +28,11 @@ export class ConfirmAccount {
     confirmAccount(token: string) {
       this.authService.confirmAccount(token).subscribe({
         next: (res:any) => {
-          this.successMessage = res.message || 'Cuenta confirmada correctamente. Redirigiendo al login...';
+          this.successMessage.set(res.message || 'Cuenta confirmada correctamente. Redirigiendo al login...');
           setTimeout(() => this.router.navigate(['/login']), 2000);
         },
         error: (err) => {
-          this.errorMessage = err.error?.message || 'Error al confirmar la cuenta';
+          this.errorMessage.set(err.error?.message || 'Error al confirmar la cuenta');
         } 
     })
   }

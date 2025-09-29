@@ -15,25 +15,25 @@ export class Login {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
-  userName = signal<string | null>(null); 
+  name = signal<string | null>(null); 
 
   constructor(private authService: authService, private router: Router){}
 
   login(){
     this.authService.login(this.email,this.password).subscribe({
       next: (res) => {
-        this.userName.set(res.userName);
+        this.name.set(res.user.name);  // Guardar el nombre del usuario
         this.router.navigate(['/crud']);
       },
       error: (err) =>{
-        this.errorMessage = 'Usuario o contraseña incorrecta'
+        this.errorMessage = err.error?.message || 'Error al iniciar sesión';
       }
     });
   }
 
   logout() {
     this.authService.logout().subscribe(() => {
-      this.userName.set(null);           // limpiar el nombre
+      this.name.set(null);           // limpiar el nombre
       this.router.navigate(['/login']);  // redirigir al login
     });
   }
