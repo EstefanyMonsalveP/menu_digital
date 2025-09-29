@@ -11,4 +11,5 @@ backend/dist
 backend/**/*.js
 backend/**/*.js.map
 backend/**/*.d.ts
+backend/**/*.d.ts.map
 
