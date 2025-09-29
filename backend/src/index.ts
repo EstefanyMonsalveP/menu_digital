@@ -9,6 +9,7 @@ import userRouter from "./routes/userRouter";
 import authRouter from "./routes/authRouter";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from "path";
 
 const app = Express();
 
@@ -38,6 +39,15 @@ app.use("/api/users", userRouter)
 //Rutas relacionadas con la autenticacion de usuario
 app.use("/api/auth", authRouter)
 console.log("Configurando la ruta de autenticacion")
+
+// Servir archivos estáticos del frontend Angular
+const angularDistPath = path.join(__dirname, "../../frontend/dist/frontend");
+app.use(Express.static(angularDistPath));
+
+// Redirigir cualquier ruta no reconocida al index.html de Angular
+app.get("*", (req, res) => {
+    res.sendFile(path.join(angularDistPath, "index.html"));
+});
 
 //Inicializa el servidor en el puerto definido
 app.listen(PORT, () => {
