@@ -48,7 +48,7 @@ export const createUser = async (req: Request, res: Response) => {
     //Envia el error si proviene del servicio de creación de usuario
      if (error instanceof Error) {
       return res.status(400).json({
-        message: error.message, // aquí devuelves "El email ya se encuentra registrado"
+        message: error.message, 
       });
     }
         //Envia el error con el mensaje si proviene del servidor

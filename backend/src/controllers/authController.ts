@@ -88,8 +88,11 @@ export const confirmAccount = async (req: Request, res: Response) => {
           //Verficar el token
       const decoded = verifyToken(token as string);
 
-      //Tomar el id del usuario del token decodificado
-      const user = decoded.userId ; 
+      //Buscar el usuario en la BD
+      const user = await User.findById(decoded.userId);
+      if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    } ; 
 
       //Confirmar la cuenta del usuario
       user.isConfirmed = true;
