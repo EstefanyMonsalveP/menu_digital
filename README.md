@@ -118,3 +118,5 @@ Bootstrap para estilos
 - `PUT /api/dishes/:id` → Actualizar plato
 - `DELETE /api/dishes/:id` → Eliminar plato
 
+## 👩‍💻 Autor
+**Estefany Monsalve Pino** - [GitHub](https://github.com/EstefanyMonsalveP) - monsalvepinoe@email.com
