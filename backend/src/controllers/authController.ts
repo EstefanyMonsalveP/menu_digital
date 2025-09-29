@@ -4,7 +4,6 @@ import { resetPasswordSchema } from "../schema/resetPassword.schema";
 import { User } from "../models/user";
 import { verifyToken } from "../utils/tokenUtils";
 
-const JWT_SECRET = process.env.JWT_SECRET!;
 
 //Función para manejar la validacion de las credenciales
 export const login = async (req: Request, res:Response) => {

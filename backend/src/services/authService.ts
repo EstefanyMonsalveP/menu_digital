@@ -15,6 +15,11 @@ export const authenticateUser = async (email: string , password:string ) => {
     //Envia un error si las contraseñas no coinciden.
     if(!isValidPassword) throw new Error("El usuario o la contraseña es incorrecta");
 
+    //Validar si el usuario está confirmado
+    if(!user.isConfirmed){
+        throw new Error("Por favor, confirme su cuenta antes de iniciar sesión");
+    }
+
     const token = await generateToken({id: user.id, username: user.name,})
 
     return {user, token};
