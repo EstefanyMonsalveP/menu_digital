@@ -8,4 +8,7 @@ backend/.env.production
 
 backend/dist
 
-backend/*.js.map
+backend/**/*.js
+backend/**/*.js.map
+backend/**/*.d.ts
+
