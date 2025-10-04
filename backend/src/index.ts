@@ -30,30 +30,13 @@ if(!PORT)throw new Error("Se presentaron problemas para inicializar el puerto");
 conexionDB(); //Se invoca la función para conectar la base de datos.
 
 //Rutas relacionadas con los platos
-try {
-  app.use("/api/dishes", dishRouter)
-  console.log("Configurando la ruta de dishes") 
-} catch (error) {
-  console.error("❌ Error en dishRouter:", error);
-}
+app.use("/api/dishes", dishRouter)
 
-
-try {
 //Rutas relacionadas con el usuario
 app.use("/api/users", userRouter)
-console.log("Configurando la ruta de users")  
-} catch (error) {
-  console.error("❌ Error en dishRouter:", error);
-}
 
-try {
-  //Rutas relacionadas con la autenticacion de usuario
+//Rutas relacionadas con la autenticacion de usuario
 app.use("/api/auth", authRouter)
-console.log("Configurando la ruta de autenticacion") 
-} catch (error) {
-   console.error("❌ Error en dishRouter:", error);
-}
-
 
 // Servir Angular compilado solo en producción
 if (process.env.NODE_ENV === "production") {
