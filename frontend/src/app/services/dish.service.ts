@@ -2,14 +2,14 @@ import { Injectable } from "@angular/core";
 import { HttpClient , HttpHeaders } from "@angular/common/http";
 import { Dish } from "../models/dish";
 import { Observable,map } from "rxjs";
+import { environment } from "../../environment";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class DishService {
-    private apiUrl = 'http://localhost:3000/api/dishes'
-
+    readonly apiUrl = environment.apiUrl;
     constructor(private http: HttpClient){}
 
     //Obtener los platos
