@@ -1,7 +1,5 @@
+import path from "path";
 import dotenv from 'dotenv';
-dotenv.config({
-  path: process.env.NODE_ENV === "production" ? ".env.production" : ".env"});
-
 import Express from "express";
 import { conexionDB } from "./data/db";
 import dishRouter from "./routes/dishRouter";
@@ -9,7 +7,8 @@ import userRouter from "./routes/userRouter";
 import authRouter from "./routes/authRouter";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import path from "path";
+dotenv.config({
+  path: path.resolve(__dirname, "../..", process.env.NODE_ENV === "production" ? ".env.production" : ".env")});
 
 const app = Express();
 
@@ -17,7 +16,7 @@ app.use(Express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin:'http://localhost:4200',
+    origin:['http://localhost:4200', 'http://localhost:3000'],
     credentials:true
 }));
 
@@ -31,24 +30,43 @@ if(!PORT)throw new Error("Se presentaron problemas para inicializar el puerto");
 conexionDB(); //Se invoca la función para conectar la base de datos.
 
 //Rutas relacionadas con los platos
-app.use("/api/dishes", dishRouter)
+try {
+  app.use("/api/dishes", dishRouter)
+  console.log("Configurando la ruta de dishes") 
+} catch (error) {
+  console.error("❌ Error en dishRouter:", error);
+}
 
+
+try {
 //Rutas relacionadas con el usuario
 app.use("/api/users", userRouter)
+console.log("Configurando la ruta de users")  
+} catch (error) {
+  console.error("❌ Error en dishRouter:", error);
+}
 
-//Rutas relacionadas con la autenticacion de usuario
+try {
+  //Rutas relacionadas con la autenticacion de usuario
 app.use("/api/auth", authRouter)
-console.log("Configurando la ruta de autenticacion")
+console.log("Configurando la ruta de autenticacion") 
+} catch (error) {
+   console.error("❌ Error en dishRouter:", error);
+}
 
-// Servir archivos estáticos del frontend Angular
-const angularDistPath = path.join(__dirname, "../../frontend/dist/frontend/browser");
-app.use(Express.static(angularDistPath));
 
-// Redirigir cualquier ruta no reconocida al index.html de Angular
-app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(angularDistPath, "index.html"));
-});
+// Servir Angular compilado solo en producción
+if (process.env.NODE_ENV === "production") {
+    const angularDistPath = path.join(__dirname, "../../frontend/dist/frontend/browser");
 
+    // Archivos estáticos
+    app.use(Express.static(angularDistPath));
+
+    // Fallback: todas las rutas que no empiecen con /api
+    app.get(/^(?!\/api).*/, (req, res) => {
+        res.sendFile(path.join(angularDistPath, "index.html"));
+    });
+}
 
 //Inicializa el servidor en el puerto definido
 app.listen(PORT, () => {
