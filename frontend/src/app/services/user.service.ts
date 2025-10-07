@@ -12,7 +12,7 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = `${environment.apiUrl}/users`;
 
   // Signal opcional para mantener lista de usuarios localmente
   users = signal<User[]>([]);

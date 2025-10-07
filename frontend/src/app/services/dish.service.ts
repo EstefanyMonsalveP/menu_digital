@@ -9,7 +9,7 @@ import { environment } from "../../environments/environment";
 })
 
 export class DishService {
-    readonly apiUrl = environment.apiUrl;
+    readonly apiUrl = `${environment.apiUrl}/dishes`;
     constructor(private http: HttpClient){}
 
     //Obtener los platos

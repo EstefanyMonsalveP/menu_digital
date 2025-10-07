@@ -20,7 +20,7 @@ export class authService{
     //Llama el servicio para validar las credenciales del usuario
     login(email: string, password:string): Observable<{message: string, user: {id: string, name: string}}>{
         return this.http.post<{message: string, user: {id: string, name: string}}>(
-            `${environment.apiUrl}/api/auth`,
+            `${environment.apiUrl}/auth`,
             { email, password },
             { withCredentials: true }
         ).pipe(
@@ -33,7 +33,7 @@ export class authService{
     //Metodo para cerrar sesion
     //Llama el servicio para eliminar la cookie de sesion
     logout():  Observable<any> {
-    return this.http.post(`/api/auth/logout`, {}, { withCredentials: true })
+    return this.http.post(`${environment.apiUrl}/auth/logout`, {}, { withCredentials: true })
     .pipe(
         tap(() => this.currentUserName.set('')) // limpiar el signal al logout
     );
@@ -41,13 +41,13 @@ export class authService{
 
   //Llama el servicio para enviar correo de recuperacion de email
   sendRecoveryEmail(email: string): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/auth/recover-password`, { email }, { withCredentials: true });
+    return this.http.post(`${environment.apiUrl}/auth/recover-password`, { email }, { withCredentials: true });
 }
 
 
   //Llama el servicio para actualizar la contraseña
     resetPassword(token: string, password: string, confirmPassword: string): Observable<any> {
-        return this.http.post(`${environment.apiUrl}/api/auth/reset-password`, 
+        return this.http.post(`${environment.apiUrl}/auth/reset-password`, 
         { token, password, confirmPassword }, 
         { withCredentials: true }
     );
@@ -55,7 +55,7 @@ export class authService{
 
     //Llama el servicio para confirmar la cuenta
     confirmAccount(token: string): Observable<any> {
-        return this.http.post(`${environment.apiUrl}/api/auth/confirm-account`, 
+        return this.http.post(`${environment.apiUrl}/auth/confirm-account`, 
         { token }, 
         { withCredentials: true }
     );
