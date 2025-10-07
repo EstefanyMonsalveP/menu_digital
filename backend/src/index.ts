@@ -12,18 +12,20 @@ dotenv.config({
 
 const app = Express();
 
+app.use(
+  cors({
+    origin: process.env.NODE_ENV === "production"
+      ? ["https://menu-digital-frontend.onrender.com"]
+      : ["http://localhost:4200", "http://localhost:3000"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+
 app.use(Express.json());
 app.use(cookieParser());
-
-const allowedOrigins = process.env.NODE_ENV === "production"
-  ? ['https://menu-digital-frontend.onrender.com'] 
-  : ['http://localhost:4200', 'http://localhost:3000'];
-
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
-}));
-
 
 //Obtiene el puerto desde la variable de entorno
 const PORT = process.env.PORT;
