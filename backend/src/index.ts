@@ -15,9 +15,13 @@ const app = Express();
 app.use(Express.json());
 app.use(cookieParser());
 
+const allowedOrigins = process.env.NODE_ENV === "production"
+  ? ['https://menu-digital-frontend.onrender.com'] 
+  : ['http://localhost:4200', 'http://localhost:3000'];
+
 app.use(cors({
-    origin:['http://localhost:4200', 'http://localhost:3000'],
-    credentials:true
+  origin: allowedOrigins,
+  credentials: true
 }));
 
 
@@ -42,10 +46,8 @@ app.use("/api/auth", authRouter)
 if (process.env.NODE_ENV === "production") {
     const angularDistPath = path.join(__dirname, "../../frontend/dist/frontend/browser");
 
-    // Archivos estáticos
     app.use(Express.static(angularDistPath));
 
-    // Fallback: todas las rutas que no empiecen con /api
     app.get(/^(?!\/api).*/, (req, res) => {
         res.sendFile(path.join(angularDistPath, "index.html"));
     });
