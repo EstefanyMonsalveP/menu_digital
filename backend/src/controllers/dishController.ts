@@ -7,7 +7,7 @@ export const createDish = async (req: AuthRequest, res: Response) => {
     try{
 
         //Validar la sesion del usuario;
-        const userId = req.user?.id;
+        const userId = req.user?.userId;
 
         //Extrae las variables del cuerpo de la interfaz
         const {image, dishName, description, price} = req.body;
@@ -37,7 +37,7 @@ export const createDish = async (req: AuthRequest, res: Response) => {
 export const getUserDishes = async (req: AuthRequest, res: Response) => {
     try{
 
-        const userId = req.user?.id;
+        const userId = req.user?.userId;
         //Busca todos los platos
         const dishes = await Dish.find({user: userId});
 
@@ -55,7 +55,7 @@ export const updateDish = async (req: AuthRequest, res: Response) => {
     const {id} = req.params;
     //Obtiene los datos del cuerpo 
     const updateData = req.body;
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
     try{
 
         //Buscar el plato por id
@@ -89,7 +89,7 @@ export const updateDish = async (req: AuthRequest, res: Response) => {
 export const removeDish = async (req: AuthRequest, res: Response) => {
     //Toma el id de la URL
     const {id} = req.params;
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
     try{
 
          //Buscar el plato por id
