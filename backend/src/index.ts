@@ -12,17 +12,34 @@ dotenv.config({
 
 const app = Express();
 
-app.use(
-  cors({
-    origin: process.env.NODE_ENV === "production"
-      ? ["https://menu-digital-frontend.onrender.com"]
-      : ["http://localhost:4200", "http://localhost:3000"],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+const allowedOrigins = [
+  "http://localhost:4200",
+  "http://localhost:3000",
+  "https://menu-digital-frontend.onrender.com"
+];
 
+const corsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    console.log("🔍 Origin recibido:", origin);
+    if (!origin || allowedOrigins.includes(origin)) {
+      console.log("✅ CORS permitido para:", origin);
+      callback(null, true);
+    } else {
+      console.warn("❌ Origen no permitido por CORS:", origin);
+      callback(new Error("CORS no permitido para este origen"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  preflightContinue: false,
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
+
+app.options("*", cors(corsOptions));
 
 app.use(Express.json());
 app.use(cookieParser());
