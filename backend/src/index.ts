@@ -67,8 +67,8 @@ if (process.env.NODE_ENV === "production") {
 
     app.use(Express.static(angularDistPath));
 
-    app.get(/^(?!\/api).*/, (req, res) => {
-        res.sendFile(path.join(angularDistPath, "index.html"));
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(angularDistPath, "index.html"));
     });
 }
 
