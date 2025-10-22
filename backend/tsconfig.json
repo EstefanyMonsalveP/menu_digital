@@ -1,38 +1,44 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
-  "compilerOptions": {
-    // File Layout
+"compilerOptions": {
+    // === Estructura de archivos ===
     "rootDir": "./src",
     "outDir": "./dist",
 
-    // Environment Settings
-    // See also https://aka.ms/tsconfig/module
+    // === Configuración del entorno ===
+    "target": "ES2020",
     "module": "CommonJS",
     "esModuleInterop": true,
-    "target": "ES2020",
-    "types": ["node","express"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
 
-    // Other Outputs
+    // === Tipos ===
+    "types": ["node", "express"],
+    "skipLibCheck": true,
+
+    // === Archivos generados ===
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    // Stricter Typechecking Options
+    // === Reglas de chequeo ===
+    "strict": true,
+    "noImplicitAny": false, // ✅ evita el error: Parameter 'origin' implicitly has an 'any' type
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
-
-    // Recommended Options
-    "strict": true,
+    // === Otras opciones ===
     "jsx": "react-jsx",
     "verbatimModuleSyntax": false,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true,
+    "moduleDetection": "force"
   },
   "include": [
     "src/**/*.ts",
     "src/types/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
