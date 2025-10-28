@@ -17,7 +17,6 @@ export const login = async (req: Request, res:Response) => {
         httpOnly: true,
         secure: isProduction,
         sameSite: isProduction ? "none" : "lax",
-        domain: isProduction ? ".onrender.com" : undefined,
         maxAge: 3600000, // 1 hora (igual que el tiempo del token)
         });
 
