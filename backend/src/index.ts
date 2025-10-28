@@ -61,10 +61,8 @@ if (process.env.NODE_ENV === "production") {
     app.use(Express.static(angularDistPath));
 
     app.get('*', (req, res) => {
-        if (!req.path.startsWith('/api')) {
-            res.sendFile(path.join(angularDistPath, 'index.html'));
-        }
-    });
+    res.sendFile(path.join(angularDistPath, 'index.html'));
+  });
 }
 
 //Inicializa el servidor en el puerto definido
