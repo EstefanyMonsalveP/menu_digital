@@ -20,7 +20,7 @@ export const authenticateUser = async (email: string , password:string ) => {
         throw new Error("Por favor, confirme su cuenta antes de iniciar sesión");
     }
 
-    const token = await generateToken({id: user.id, username: user.name,})
+    const token = await generateToken({userId: user.id, username: user.name,})
 
     return {user, token};
     
