@@ -7,6 +7,7 @@ import userRouter from "./routes/userRouter";
 import authRouter from "./routes/authRouter";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import fs from "fs";
 dotenv.config({
   path: path.resolve(__dirname, "../..", process.env.NODE_ENV === "production" ? ".env.production" : ".env")});
 
@@ -64,12 +65,19 @@ app.use("/api/auth", authRouter)
 // Servir Angular compilado solo en producción
 if (process.env.NODE_ENV === "production") {
     const angularDistPath = path.join(__dirname, "../../frontend/dist/frontend/browser");
-
+    console.log("📁 angularDistPath:", angularDistPath);
+if (!fs.existsSync(angularDistPath)) {
+  console.error("❌ No existe la ruta AngularDistPath. Revisa la ruta compilada:", angularDistPath);
+  process.exit(1);
+}
     app.use(Express.static(angularDistPath));
 
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(angularDistPath, "index.html"));
-    });
+    app.use((req, res, next) => {
+  if (req.path.startsWith("/api")) {
+    return next();
+  }
+  res.sendFile(path.join(angularDistPath, "index.html"));
+});
 }
 
 //Inicializa el servidor en el puerto definido
