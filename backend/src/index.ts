@@ -65,11 +65,6 @@ app.use("/api/auth", authRouter)
 // Servir Angular compilado solo en producción
 if (process.env.NODE_ENV === "production") {
     const angularDistPath = path.join(__dirname, "../../frontend/dist/frontend/browser");
-    console.log("📁 angularDistPath:", angularDistPath);
-if (!fs.existsSync(angularDistPath)) {
-  console.error("❌ No existe la ruta AngularDistPath. Revisa la ruta compilada:", angularDistPath);
-  process.exit(1);
-}
     app.use(Express.static(angularDistPath));
 
     app.use((req, res, next) => {
