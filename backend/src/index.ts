@@ -7,7 +7,6 @@ import userRouter from "./routes/userRouter";
 import authRouter from "./routes/authRouter";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import fs from "fs";
 dotenv.config({
   path: path.resolve(__dirname, "../..", process.env.NODE_ENV === "production" ? ".env.production" : ".env")});
 
@@ -16,31 +15,25 @@ const app = Express();
 const allowedOrigins = [
   "http://localhost:4200",
   "http://localhost:3000",
-  "https://menu-digital-frontend.onrender.com"
+  "https://menu-digital-frontend.onrender.com",
+  "https://menu-digital-wk8k.onrender.com"
 ];
 
-const corsOptions = {
-  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-    console.log("🔍 Origin recibido:", origin);
-    if (!origin || allowedOrigins.includes(origin)) {
-      console.log("✅ CORS permitido para:", origin);
-      callback(null, true);
-    } else {
-      console.warn("❌ Origen no permitido por CORS:", origin);
-      callback(new Error("CORS no permitido para este origen"));
-    }
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  preflightContinue: false,
-  optionsSuccessStatus: 200,
-};
+const isProduction = process.env.NODE_ENV === "production";
 
-app.use(cors(corsOptions));
-
-
-app.options("*", cors(corsOptions));
+app.use(
+  cors({
+    origin: isProduction
+      ? [
+          "https://menu-digital-frontend.onrender.com", 
+        ]
+      : [
+          "http://localhost:4200", 
+          "http://localhost:3000", 
+        ],
+    credentials: true,
+  })
+);
 
 app.use(Express.json());
 app.use(cookieParser());
