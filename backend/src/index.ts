@@ -60,12 +60,11 @@ if (process.env.NODE_ENV === "production") {
     const angularDistPath = path.join(__dirname, "../../frontend/dist/frontend/browser");
     app.use(Express.static(angularDistPath));
 
-    app.use((req, res, next) => {
-  if (req.path.startsWith("/api")) {
-    return next();
-  }
-  res.sendFile(path.join(angularDistPath, "index.html"));
-});
+    app.get('*', (req, res) => {
+        if (!req.path.startsWith('/api')) {
+            res.sendFile(path.join(angularDistPath, 'index.html'));
+        }
+    });
 }
 
 //Inicializa el servidor en el puerto definido
