@@ -19,18 +19,17 @@ const allowedOrigins = [
   "https://menu-digital-wk8k.onrender.com"
 ];
 
-const isProduction = process.env.NODE_ENV === "production";
 
 app.use(
   cors({
-    origin: isProduction
-      ? [
-          "https://menu-digital-frontend.onrender.com", 
-        ]
-      : [
-          "http://localhost:4200", 
-          "http://localhost:3000", 
-        ],
+     origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.warn(" Bloqueado por CORS:", origin);
+        callback(new Error("No permitido por CORS"));
+      }
+    },
     credentials: true,
   })
 );
