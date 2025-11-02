@@ -16,13 +16,13 @@ export class ConfirmAccount {
   constructor(private route: ActivatedRoute, private authService: authService, private router: Router){}
   ngOnInit() {
       // Tomamos el token de la URL
-      this.route.queryParams.subscribe(params => {
-        this.token = params['token'] || '';
-        if(this.token) {
-          this.confirmAccount(this.token);
-        }
-      });
+     const token = this.route.snapshot.queryParamMap.get('token');
+     if (token) {
+      this.confirmAccount(token);
+    } else {
+      this.errorMessage.set('Token no encontrado en el enlace');
     }
+  }
   
     //Validar el token, activar la cuenta y enviar el mensaje de éxito o error
     confirmAccount(token: string) {
