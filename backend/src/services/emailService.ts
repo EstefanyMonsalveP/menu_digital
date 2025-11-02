@@ -32,7 +32,8 @@ export const sendRecoveryEmail = async (to: string, resetLink: string) => {
 //Funcion para enviar correo de confirmación de cuenta
 export const sendConfirmationUserEmail= async (email: string, token: string) => {
   try {
-    const confirmUrl = `http://localhost:4200/confirm-account?token=${token}`;
+    const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:4200";
+    const confirmUrl = `${FRONTEND_URL}/confirm-account?token=${token}`;
     await transporter.sendMail({
       from: `"Mi App Menu Digital" <${process.env.EMAIL_USER}>`,  
       to: email,                                            
