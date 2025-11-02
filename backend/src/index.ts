@@ -58,10 +58,12 @@ app.use("/api/auth", authRouter)
 // Servir Angular compilado solo en producción
 if (process.env.NODE_ENV === "production") {
     const angularDistPath = path.join(__dirname, "../../frontend/dist/frontend/browser");
-    app.use(Express.static(angularDistPath));
-
-    app.get(/^\/(?!api).*/, (req, res) => {
-    res.sendFile(path.join(angularDistPath, "index.html"));
+     app.get("*", (req, res) => {
+    if (!req.originalUrl.startsWith("/api")) {
+      res.sendFile(path.join(angularDistPath, "index.html"));
+    } else {
+      res.status(404).send("API route not found");
+    }
   });
 }
 
