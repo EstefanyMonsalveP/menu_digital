@@ -95,12 +95,10 @@ Bootstrap para estilos
 
 ### Backend
 - `npm run dev` → corre el servidor con nodemon y TypeScript.
-- `npm run build` → transpila TypeScript a JavaScript en `/dist`.
-- `npm start` → ejecuta el código compilado en `/dist`.
+
 
 ### Frontend
 - `ng serve` → corre la aplicación Angular en modo desarrollo.
-- `ng build` → genera la build para producción en `/dist`.
 
 ---
 
@@ -117,6 +115,14 @@ Bootstrap para estilos
 - `POST /api/dishes` → Crear plato
 - `PUT /api/dishes/:id` → Actualizar plato
 - `DELETE /api/dishes/:id` → Eliminar plato
+
+✉️ Envío de correos y confirmación de cuenta
+
+En modo desarrollo, al registrarse un usuario, se envía un correo de confirmación con un enlace para activar la cuenta (usando Nodemailer).
+
+En modo producción (Render), la cuenta se confirma automáticamente al presionar el botón de "Crear cuenta", ya que el servicio de correo no está disponible en entornos gratuitos.
+
+⚠️ Nota: El flujo de “recuperar contraseña” también está deshabilitado en la versión de producción por esta misma razón.
 
 ## 👩‍💻 Autor
 **Estefany Monsalve Pino** - [GitHub](https://github.com/EstefanyMonsalveP) - monsalvepinoe@email.com
