@@ -20,14 +20,13 @@ export const createUser = async (req: Request, res: Response) => {
         //Despues de la validación, continua con la creación del usuario
         const newUser = new User(validatedData)
 
-        console.log("NODE_ENV actual:", process.env.NODE_ENV);
         if (process.env.NODE_ENV === "production") {
             // PRODUCCIÓN: confirmar automáticamente
             newUser.isConfirmed = true;
             await newUser.save();
 
             return res.status(201).json({
-                message: "Cuenta creada y confirmada automáticamente",
+                message: "Cuenta creada y confirmada automáticamente, ya puede iniciar sesion",
             });
         } else {
 
