@@ -20,6 +20,17 @@ export const createUser = async (req: Request, res: Response) => {
         //Despues de la validación, continua con la creación del usuario
         const newUser = new User(validatedData)
 
+        console.log("NODE_ENV actual:", process.env.NODE_ENV);
+        if (process.env.NODE_ENV === "production") {
+            // PRODUCCIÓN: confirmar automáticamente
+            newUser.isConfirmed = true;
+            await newUser.save();
+
+            return res.status(201).json({
+                message: "Cuenta creada y confirmada automáticamente",
+            });
+        } else {
+
         //Guarda el nuevo usuario en la base de datos.
         await newUser.save();
 
@@ -32,6 +43,7 @@ export const createUser = async (req: Request, res: Response) => {
         await sendConfirmationUserEmail(newUser.email, token);
 
         return res.status(201).json({message: "Usuario creado con exito, por favor revisar su correo y confirmar la cuenta"})
+      }
     } catch (error) {
         console.log("Error al crear usuario", error);
         //Envia los mensajes de error si provienen de Zod
