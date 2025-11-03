@@ -23,7 +23,6 @@ export const sendRecoveryEmail = async (to: string, resetLink: string) => {
         <a href="${resetLink}">${resetLink}</a>
       `
     });
-    console.log('Correo de recuperación enviado a:', to);
   } catch (error) {
     console.error('Error enviando correo:', error);
   }

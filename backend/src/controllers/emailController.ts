@@ -14,9 +14,7 @@ export const recoveryPassoword = async (req: Request, res: Response) => {
 
         //Crear token o link de recuperación (puedes usar JWT o un UUID)
         const resetToken = await generateToken({userId: user.id}); 
-        console.log("Reset token:", resetToken);
         const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
-        console.log("Reset link:", resetLink);
 
         //Enviar correo con el link
         await sendRecoveryEmail(email, resetLink);
