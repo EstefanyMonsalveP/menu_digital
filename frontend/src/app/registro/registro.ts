@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 
+
 @Component({
   selector: 'app-registro',
   standalone: true,
@@ -49,8 +50,8 @@ export class Registro {
       email: this.email,
       password: this.password
     }).subscribe({
-      next: () => {
-        this.successMessage.set('Usuario creado correctamente. Revisar correo para confirmar la cuenta.');
+      next: (res) => {
+        this.successMessage.set((res as any).message);
         this.name = '';
         this.email = '';
         this.password = '';
